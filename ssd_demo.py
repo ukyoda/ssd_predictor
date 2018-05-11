@@ -5,17 +5,28 @@
 import os
 import cv2
 import numpy as np
+import argparse
 
 from predictor.ssd.SSDPredictor import SSDPrecitor
 
 ROOT_DIR = os.path.dirname(__file__)
 
 def main(args=None):
+    # ビデオロード
+
+    if args.camera:
+        video_resource = args.camera_select
+    else:
+        video_resource = args.file
+
+    video = cv2.VideoCapture(video_resource)
+    if not video.isOpened:
+        raise IOError('読み込みエラー')
+
+    # 識別器作成
     modelfile = os.path.join(ROOT_DIR, 'models/weights_SSD300.hdf5')
     predictor = SSDPrecitor(modelfile)
-    video = cv2.VideoCapture(0)
-    if not video.isOpened:
-        raise IOError('エラー')
+
 
     while True:
         ret, frame = video.read()
@@ -34,4 +45,12 @@ def main(args=None):
             break
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--file', help='動画ファイルを指定(カメラモードの時は見指定でOK)')
+    parser.add_argument('--camera', action='store_true', help='指定するとカメラを起動する')
+    parser.add_argument('--camera_select', type=int, default=0, help='カメラを指定した時、カメラデバイスのIDを指定')
+    args = parser.parse_args()
+    if not args.file and not args.camera:
+        parser.print_help()
+    else:
+        main(args=args)
