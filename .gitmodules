@@ -1,3 +1,0 @@
-[submodule "vendors/ssd_keras"]
-	path = vendors/ssd_keras
-	url = https://github.com/rykov8/ssd_keras
