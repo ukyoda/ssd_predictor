@@ -5,8 +5,9 @@
 import numpy as np
 
 from ..base import PredictorBase
-from .. import vendors
-from vendors.ssd import SSD300 as SSD
+from ..vendors import ssd, ssd_utils
+from ssd import SSD300 as SSD
+from ssd_utils import BBoxUtility
 from keras.applications.imagenet_utils import preprocess_input
 
 class SSDPrecitor(PredictorBase):

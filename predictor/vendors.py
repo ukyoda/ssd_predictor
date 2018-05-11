@@ -17,5 +17,4 @@ ROOT_DIR = os.path.abspath(os.path.join(THIS_DIR, '..'))
 # ------------------------------------------------------------------------------
 addpath(os.path.join(ROOT_DIR, 'vendors/ssd_keras'))
 import ssd
-from ssd_utills import BBoxUtility
-poppath()
+import ssd_utils
