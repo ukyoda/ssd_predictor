@@ -1,0 +1,3 @@
+[submodule "vendors/ssd_keras"]
+	path = vendors/ssd_keras
+	url = git://github.com/ukyoda/ssd_keras.git
