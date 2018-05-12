@@ -39,6 +39,8 @@ class SSDPrecitor(PredictorBase):
     def predict(self, src):
         """
         SSDにより、入力画像からオブジェクトを識別する
+        :param src: 入力画像
+        :return: ラベルID, スコア, Boxデータ(floatなので注意!!)
         """
         height, width, channels = src.shape
         # 前処理
@@ -60,6 +62,8 @@ class SSDPrecitor(PredictorBase):
     def _preprocess(self, src):
         """
         入力された画像に対して前処理を行う
+        :param src: 入力画像
+        :return: 300x300にリサイズし、BGR->RGBに変換した画像
         """
         im_size = (self.input_shape[0], self.input_shape[1])
         resized = cv2.resize(src, im_size)
@@ -71,6 +75,8 @@ class SSDPrecitor(PredictorBase):
     def _decodebox(self, preds):
         """
         識別処理後の後処理
+        :param preds: SSDモデルの識別結果
+        :return: confが閾値以上のボックスのみ抽出
         """
         conf_thresh=self.conf_thresh
 

@@ -41,7 +41,10 @@ def main(args=None):
         if not ret:
             break
 
+        # オブジェクト検出を行う
         results = predictor.predict(frame)
+
+        # 検出結果を描画
         for label_id, score, box in results:
             label = labels[label_id]
             color = colors[label_id]
@@ -61,13 +64,13 @@ def main(args=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--file', help='動画ファイルを指定(カメラモードの時は見指定でOK)')
+    parser.add_argument('--file', help='動画ファイルを指定(カメラモードの時は未指定でOK)')
     parser.add_argument('--camera', action='store_true', help='指定するとカメラを起動する')
     parser.add_argument('--camera_select', type=int, default=0, help='カメラを指定した時、カメラデバイスのIDを指定')
     parser.add_argument('--models', default='models/weights_SSD300.hdf5', help='SSDモデルファイル')
+    parser.add_argument('--labelfile', default="models/classname.txt", help='ラベル名称が書かれたファイル')
     parser.add_argument('--num_classes', type=int, default=21, help='SSDモデルの分類数')
     parser.add_argument('--thresh', type=float, default=0.7, help='物体識別の閾値')
-    parser.add_argument('--labelfile', help='ラベル名称が書かれたファイル')
     args = parser.parse_args()
     if not args.file and not args.camera:
         parser.print_help()
